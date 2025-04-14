@@ -32,7 +32,7 @@ runs:
 
     - name: Install Dependencies
       shell: bash
-      run: pip install -r requirements.txt
+      run: pip install -r ${{ github.action_path }}/requirements.txt
 
     - name: Zenodo actions
       shell: bash
@@ -43,4 +43,4 @@ runs:
         METADATA: ${{ inputs.metadata }}
         SANDBOX: ${{ inputs.sandbox }}
         PUBLISH: ${{ inputs.publish }}
-      run: python src/main.py
+      run: python ${{ github.action_path }}/src/main.py
