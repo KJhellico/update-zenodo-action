@@ -1,4 +1,5 @@
 import os
+
 from zenodo import ZenodoAPI
 
 
@@ -18,6 +19,7 @@ def main():
     api.upload_files(new_ver_id, filenames.split(" "))
     if publish.lower() == "true":
         api.publish_version(new_ver_id)
+
 
 if __name__ == "__main__":
     main()

@@ -1,5 +1,5 @@
 import os
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import requests
 import yaml
@@ -14,9 +14,7 @@ class ZenodoAPI:
     Supports both production and sandbox environments for managing deposits.
     """
 
-    def __init__(
-        self, auth_token: str, sandbox: bool = False, metadata_file: Optional[str] = None
-    ):
+    def __init__(self, auth_token: str, sandbox: bool = False, metadata_file: str | None = None):
         """Initialize the Zenodo API client.
 
         Args:
@@ -35,15 +33,15 @@ class ZenodoAPI:
             "Authorization": f"Bearer {auth_token}",
         }
         if metadata_file:
-            with open(metadata_file, "r", encoding="utf-8") as f:
+            with open(metadata_file, encoding="utf-8") as f:
                 self.matadata = yaml.safe_load(f)
 
     def _make_request(
         self,
         method: str,
         endpoint: str,
-        json: Optional[Dict] = None,
-        files: Optional[Dict] = None,
+        json: dict | None = None,
+        files: dict | None = None,
     ) -> Any:
         """Perform an HTTP request to the Zenodo API.
 
@@ -95,7 +93,7 @@ class ZenodoAPI:
 
         return new_deposition_id
 
-    def create_version(self, concept_id: Optional[str] = None) -> str:
+    def create_version(self, concept_id: str | None = None) -> str:
         """Create a new concept version based on concept_id (specified or from metadata file).
 
         Returns:
@@ -173,7 +171,7 @@ class ZenodoAPI:
             file_id = file["id"]
             self._make_request("DELETE", f"/{deposition_id}/files/{file_id}")
 
-    def upload_files(self, deposition_id: str, file_paths: List[str]) -> None:
+    def upload_files(self, deposition_id: str, file_paths: list[str]) -> None:
         """Upload files to a deposit version.
 
         Args:
