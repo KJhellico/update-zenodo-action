@@ -11,20 +11,8 @@ repos:
           - --fix=lf
       - id: trailing-whitespace
 
-  - repo: https://github.com/asottile/pyupgrade
-    rev: v3.19.1
-    hooks:
-    -   id: pyupgrade
-        args:
-          - --py313-plus
-
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.11.5
+    rev: v0.11.10
     hooks:
-      - id: ruff
+      - id: ruff-check
       - id: ruff-format
-
-  - repo: https://github.com/pycqa/isort
-    rev: 6.0.1
-    hooks:
-      - id: isort
