@@ -34,7 +34,7 @@ class ZenodoAPI:
         }
         if metadata_file:
             with open(metadata_file, encoding="utf-8") as f:
-                self.matadata = yaml.safe_load(f)
+                self.metadata = yaml.safe_load(f)
 
     def _make_request(
         self,
@@ -103,7 +103,7 @@ class ZenodoAPI:
             requests.HTTPError: If the API request fails.
             KeyError: If the DOI are missing in metadata file.
         """
-        concept_id = concept_id or self.matadata["doi"].split(".")[-1]
+        concept_id = concept_id or self.metadata["doi"].split(".")[-1]
         response = self._make_request("GET", f"?q=conceptrecid:{concept_id}")
         deposition_id = response[0]["id"]
         response = self._make_request("POST", f"/{deposition_id}/actions/newversion")
@@ -122,7 +122,7 @@ class ZenodoAPI:
             requests.HTTPError: If the API request fails.
             KeyError: If required fields are missing in metadata file.
         """
-        metadata = self.matadata
+        metadata = self.metadata
 
         new_metadata = {}
         if m_title := metadata.get("title"):
